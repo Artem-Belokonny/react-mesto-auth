@@ -1,4 +1,4 @@
-function PopupWithForm({ isOpen, name, title, onClose, children }) {
+function PopupWithForm({ isOpen, name, title, onClose, children, textBtn }) {
   return (
     <section
       className={`${isOpen ? "popup popup_opened" : "popup"} popup_${name}`}
@@ -23,7 +23,7 @@ function PopupWithForm({ isOpen, name, title, onClose, children }) {
             onClick={onClose}
             className={`popup__save popup__save_${name}`}
           >
-            Сохранить
+            {textBtn}
           </button>
         </form>
       </div>

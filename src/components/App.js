@@ -47,6 +47,7 @@ function App() {
         <PopupWithForm
           title="Редактировать профиль"
           name="edit"
+          textBtn="Сохранить"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
         >
@@ -76,6 +77,7 @@ function App() {
         <PopupWithForm
           title="Новое место"
           name="add"
+          textBtn="Сохранить"
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
         >
@@ -100,10 +102,11 @@ function App() {
           />
           <span className="popup__input-error" id="add-link-error"></span>
         </PopupWithForm>
-        <PopupWithForm title="Вы уверены?" name="delete" />
+        <PopupWithForm title="Вы уверены?" name="delete" textBtn="Да"/>
         <PopupWithForm
           title="Обновить аватар"
           name="editAvatar"
+          textBtn="Сохранить"
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         >
