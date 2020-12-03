@@ -3,7 +3,7 @@ import api from "../utils/Api.js";
 import React from "react";
 import Card from "./Card.js";
 
-function Main(props) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
@@ -30,7 +30,7 @@ function Main(props) {
               src={editButton}
               alt="Редактировать"
               className="profile__edit-avatar-image"
-              onClick={props.onEditAvatar}
+              onClick={onEditAvatar}
             />
           </div>
         </div>
@@ -40,7 +40,7 @@ function Main(props) {
             <button
               type="button"
               className="profile__edit-button"
-              onClick={props.onEditProfile}
+              onClick={onEditProfile}
             >
               <img
                 src={editButton}
@@ -54,14 +54,14 @@ function Main(props) {
         <button
           type="button"
           className="profile__add-button"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         ></button>
       </section>
 
       <section className="elements">
-        {cards.map(({ id, ...props}) => {
-          return <Card key={id} {...props}/>
-        })}
+        {cards.map((card) => (
+          <Card key={card._id} card={card} onCardClick={onCardClick} />
+        ))}
       </section>
     </main>
   );

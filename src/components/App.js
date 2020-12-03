@@ -13,7 +13,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
     false
   );
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState("");
 
   function onEditProfile() {
     setIsEditProfilePopupOpen(true);
@@ -24,14 +24,14 @@ function App() {
   function onEditAvatar() {
     setIsEditAvatarPopupOpen(true);
   }
-  function handleCardClick() {
-    setSelectedCard(true)
+  function handleCardClick(card) {
+    setSelectedCard(card);
   }
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard("");
   }
 
   return (
@@ -42,6 +42,7 @@ function App() {
           onEditProfile={onEditProfile}
           onAddPlace={onAddPlace}
           onEditAvatar={onEditAvatar}
+          onCardClick={handleCardClick}
         />
         <PopupWithForm
           title="Редактировать профиль"
@@ -119,7 +120,7 @@ function App() {
             id="editAvatar-link-error"
           ></span>
         </PopupWithForm>
-        <ImagePopup onClose={closeAllPopups}/>
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <Footer />
       </div>
     </>
