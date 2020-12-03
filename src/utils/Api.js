@@ -14,9 +14,6 @@ class Api {
       .then((result) => {
         return result;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 
   patchUserData(userData) {
@@ -32,9 +29,6 @@ class Api {
       .then((result) => {
         return result;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 
   patchUserAvatar(userAvatar) {
@@ -49,9 +43,6 @@ class Api {
       .then((result) => {
         return result;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 
   getInitialCards() {
@@ -62,9 +53,6 @@ class Api {
       .then((data) => {
         return data;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 
   postNewCard(cardData) {
@@ -80,9 +68,6 @@ class Api {
       .then((data) => {
         return data;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 
   deleteCard(cardData) {
@@ -94,9 +79,6 @@ class Api {
       .then((data) => {
         return data;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 
   putLike(_id) {
@@ -108,9 +90,6 @@ class Api {
       .then((data) => {
         return data;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 
   deleteLike(_id) {
@@ -122,9 +101,6 @@ class Api {
       .then((data) => {
         return data;
       })
-      .catch((err) => {
-        alert(err);
-      });
   }
 }
 
