@@ -1,4 +1,4 @@
-function ImagePopup() {
+function ImagePopup(props) {
   return (
     <section className="popup popup_zoom">
       <div className="popup__container popup__container_zoom">
@@ -6,6 +6,7 @@ function ImagePopup() {
           type="button"
           aria-label="close"
           className="popup__close popup__close_zoom"
+          onClick={props.onClose}
         ></button>
         <img src="#" alt="" className="popup__image" />
         <p className="popup__title_zoom"></p>

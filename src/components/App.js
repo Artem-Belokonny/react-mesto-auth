@@ -13,6 +13,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
     false
   );
+  const [selectedCard, setSelectedCard] = React.useState(false);
 
   function onEditProfile() {
     setIsEditProfilePopupOpen(true);
@@ -23,10 +24,14 @@ function App() {
   function onEditAvatar() {
     setIsEditAvatarPopupOpen(true);
   }
+  function handleCardClick() {
+    setSelectedCard(true)
+  }
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard(false);
   }
 
   return (
@@ -114,7 +119,7 @@ function App() {
             id="editAvatar-link-error"
           ></span>
         </PopupWithForm>
-        <ImagePopup />
+        <ImagePopup onClose={closeAllPopups}/>
         <Footer />
       </div>
     </>

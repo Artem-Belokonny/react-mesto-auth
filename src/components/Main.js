@@ -12,8 +12,6 @@ function Main(props) {
   React.useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()]).then(
       ([userData, cardData]) => {
-        console.log(userData);
-        console.log(cardData);
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
@@ -61,8 +59,8 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        {cards.map(({ id, link, name, likes }) => {
-          return <Card key={id} link={link} name={name} likes={likes}/>
+        {cards.map(({ id, ...props}) => {
+          return <Card key={id} {...props}/>
         })}
       </section>
     </main>
