@@ -50,6 +50,7 @@ function App() {
             minLength="2"
             maxLength="40"
             required
+            placeholder="Имя"
             className="popup__input popup__input_edit_name"
             id="edit-name"
           />
@@ -60,6 +61,7 @@ function App() {
             minLength="2"
             maxLength="200"
             required
+            placeholder="Занятие"
             className="popup__input popup__input_edit_about"
             id="edit-about"
           />
@@ -115,35 +117,6 @@ function App() {
         <ImagePopup />
         <Footer />
       </div>
-
-      <template className="elements-template">
-        <article className="elements__card">
-          <img src="#" alt="" className="elements__image" />
-          <div className="elements__group">
-            <p className="elements__title"></p>
-            <div className="elements__likes-container">
-              <button type="button" className="elements__like"></button>
-              <p className="elements__likes-count"></p>
-            </div>
-            <button
-              type="button"
-              aria-label="delete"
-              className="elements__delete-button"
-            >
-              <img
-                src="./images/bin1.svg"
-                alt="Удалить"
-                className="elements__delete-top"
-              />
-              <img
-                src="./images/bin2.svg"
-                alt="Удалить"
-                className="elements__delete-bottom"
-              />
-            </button>
-          </div>
-        </article>
-      </template>
     </>
   );
 }

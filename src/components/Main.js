@@ -1,11 +1,32 @@
 import editButton from "./../images/edit-button.svg";
+import api from "../utils/Api.js";
+import React from "react";
+import Card from "./Card.js";
 
 function Main(props) {
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    Promise.all([api.getUserData(), api.getInitialCards()]).then(
+      ([userData, cardData]) => {
+        console.log(userData);
+        console.log(cardData);
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+        setCards(cardData);
+      }
+    );
+  }, []);
+
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
-          <img src="#" alt="Аватарка" className="profile__avatar" />
+          <img src={userAvatar} alt="Аватарка" className="profile__avatar" />
           <div className="profile__edit-avatar">
             <img
               src={editButton}
@@ -17,7 +38,7 @@ function Main(props) {
         </div>
         <div className="profile__personal-info">
           <div className="profile__personal-adaptiv">
-            <h1 className="profile__name"></h1>
+            <h1 className="profile__name">{userName}</h1>
             <button
               type="button"
               className="profile__edit-button"
@@ -30,7 +51,7 @@ function Main(props) {
               />
             </button>
           </div>
-          <p className="profile__about"></p>
+          <p className="profile__about">{userDescription}</p>
         </div>
         <button
           type="button"
@@ -39,7 +60,11 @@ function Main(props) {
         ></button>
       </section>
 
-      <section className="elements"></section>
+      <section className="elements">
+        {cards.map(({ id, link, name, likes }) => {
+          return <Card key={id} link={link} name={name} likes={likes}/>
+        })}
+      </section>
     </main>
   );
 }
