@@ -1,4 +1,4 @@
-function PopupWithForm({ isOpen, name, title, onClose, children, textBtn }) {
+function PopupWithForm({ isOpen, name, title, onClose, children, textBtn, onSubmit }) {
   return (
     <section
       className={`${isOpen ? "popup popup_opened" : "popup"} popup_${name}`}
@@ -9,6 +9,7 @@ function PopupWithForm({ isOpen, name, title, onClose, children, textBtn }) {
           name={`${name}-form`}
           className={`popup__form popup__container popup__container_${name}`}
           noValidate
+          onSubmit={onSubmit}
         >
           <button
             type="button"
@@ -20,7 +21,6 @@ function PopupWithForm({ isOpen, name, title, onClose, children, textBtn }) {
           {children}
           <button
             type="submit"
-            onClick={onClose}
             className={`popup__save popup__save_${name}`}
           >
             {textBtn}
