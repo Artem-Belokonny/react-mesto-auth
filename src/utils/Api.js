@@ -35,9 +35,7 @@ class Api {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
-      body: JSON.stringify({
-        avatar: userAvatar.link,
-      }),
+      body: JSON.stringify(userAvatar),
     })
       .then(handleOriginalResponse)
       .then((result) => {
