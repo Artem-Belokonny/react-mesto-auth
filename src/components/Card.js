@@ -4,7 +4,10 @@ import deleteButtonBottom from "./../images/bin2.svg";
 import { CurrentUserContext } from "./../contexts/CurrentUserContext.js";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+  // подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
+
+  // Тернарные выражения на отображение стилей лайка/корзины
   const isOwn = card.owner._id === currentUser._id;
   const cardDeleteButtonClassName = `elements__delete-button ${
     isOwn ? "elements__delete-button" : "elements__delete-button_hidden"
@@ -13,6 +16,8 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const cardLikeButtonClassName = `elements__like ${
     isLiked ? "elements__like_active" : "elements__like"
   }`;
+
+  // Фукнции на зум, лайк-дизлайк, удаление прокинутые из компонента App
   function handleClick() {
     onCardClick(card);
   }

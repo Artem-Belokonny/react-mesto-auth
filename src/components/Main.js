@@ -3,7 +3,16 @@ import React from "react";
 import Card from "./Card.js";
 import { CurrentUserContext } from "./../contexts/CurrentUserContext.js";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onCardLike }) {
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+  cards,
+  onCardLike,
+  onCardDelete,
+}) {
+  // Подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
@@ -55,7 +64,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onC
             card={card}
             onCardClick={onCardClick}
             onCardLike={onCardLike}
-            // onCardDelete={onCardDelete}
+            onCardDelete={onCardDelete}
           />
         ))}
       </section>

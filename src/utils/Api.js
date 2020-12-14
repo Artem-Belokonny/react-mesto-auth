@@ -13,7 +13,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((result) => {
         return result;
-      })
+      });
   }
 
   patchUserData(userData) {
@@ -28,7 +28,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((result) => {
         return result;
-      })
+      });
   }
 
   patchUserAvatar(userAvatar) {
@@ -40,7 +40,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((result) => {
         return result;
-      })
+      });
   }
 
   getInitialCards() {
@@ -50,7 +50,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((data) => {
         return data;
-      })
+      });
   }
 
   postNewCard(cardData) {
@@ -65,7 +65,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((data) => {
         return data;
-      })
+      });
   }
 
   deleteCard(cardData) {
@@ -76,7 +76,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((data) => {
         return data;
-      })
+      });
   }
 
   putLike(_id) {
@@ -87,7 +87,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((data) => {
         return data;
-      })
+      });
   }
 
   deleteLike(_id) {
@@ -98,7 +98,7 @@ class Api {
       .then(handleOriginalResponse)
       .then((data) => {
         return data;
-      })
+      });
   }
 }
 

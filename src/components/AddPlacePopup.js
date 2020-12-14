@@ -1,15 +1,20 @@
-import PopupWithForm from "../components/PopupWithForm.js";
 import React from "react";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+  // Стейты имени и ссылки новой карточки
   const [title, setTitle] = React.useState("");
   const [link, setLink] = React.useState("");
+
+  // Управляемые компоненты input полей формы
   function handleTitleChange(evt) {
     setTitle(evt.target.value);
   }
   function handleLinkChange(evt) {
     setLink(evt.target.value);
   }
+
+  // Обработчик сабмита формы
   function handleSubmit(evt) {
     evt.preventDefault();
     onAddPlace({
@@ -17,6 +22,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       link: link,
     });
   }
+
   return (
     <PopupWithForm
       title="Новое место"

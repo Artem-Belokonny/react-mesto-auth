@@ -1,4 +1,5 @@
 import React from "react";
+import api from "../utils/Api.js";
 import Header from "../components/Header.js";
 import Main from "../components/Main.js";
 import Footer from "../components/Footer.js";
@@ -7,12 +8,33 @@ import ImagePopup from "../components/ImagePopup.js";
 import EditProfilePopup from "../components/EditProfilePopup.js";
 import EditAvatarPopup from "../components/EditAvatarPopup.js";
 import AddPlacePopup from "../components/AddPlacePopup.js";
-import api from "../utils/Api.js";
 import { CurrentUserContext } from "./../contexts/CurrentUserContext.js";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState("");
   const [cards, setCards] = React.useState([]);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(
+    false
+  );
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
+    false
+  );
+  const [selectedCard, setSelectedCard] = React.useState("");
+
+  // Монтирование эффекта через Promise.all
+  React.useEffect(() => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([userData, cardData]) => {
+        setCurrentUser(userData);
+        setCards(cardData);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, []);
+
+  // Функция лайк-дизлайк
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     if (!isLiked) {
@@ -28,33 +50,15 @@ function App() {
     }
   }
 
-  // function handleCardDelete() {
-  //   const isOwn = card.owner._id === currentUser._id;
-  //   api.deleteCard(card._id).then((newCardsArr) => {
-  //   const newCardsArr = cards.map((c) => ( ... ? newCardsArr : c));
-  //   setCards(newCardsArr);
-  // });
+  // Функция удаления карточки
+  function handleCardDelete(card) {
+    api.deleteCard(card._id).then(() => {
+      const newCardsArr = cards.filter((c) => c._id !== card._id);
+      setCards(newCardsArr);
+    });
+  }
 
-  React.useEffect(() => {
-    Promise.all([api.getUserData(), api.getInitialCards()])
-      .then(([userData, cardData]) => {
-        setCurrentUser(userData);
-        setCards(cardData);
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }, []);
-
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(
-    false
-  );
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
-    false
-  );
-  const [selectedCard, setSelectedCard] = React.useState("");
-
+  // Функции открытия popup форм
   function onEditProfile() {
     setIsEditProfilePopupOpen(true);
   }
@@ -64,15 +68,21 @@ function App() {
   function onEditAvatar() {
     setIsEditAvatarPopupOpen(true);
   }
+
+  // Функция открытия popup окна зума карточки
   function handleCardClick(card) {
     setSelectedCard(card);
   }
+
+  // Функция закрытия popup форм
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard("");
   }
+
+  // Функция апдейта данных пользователя
   function handleUpdateUser(userData) {
     api
       .patchUserData(userData)
@@ -85,6 +95,7 @@ function App() {
     closeAllPopups();
   }
 
+  // Функция апдейта аватарки пользователя
   function handleUpdateAvatar(userAvatar) {
     api
       .patchUserAvatar(userAvatar)
@@ -97,6 +108,7 @@ function App() {
     closeAllPopups();
   }
 
+  // Функция добавления новой карточки
   function handleAddPlaceSubmit(cardData) {
     api
       .postNewCard(cardData)
@@ -120,6 +132,7 @@ function App() {
           onCardClick={handleCardClick}
           cards={cards}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}

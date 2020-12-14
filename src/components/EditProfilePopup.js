@@ -3,19 +3,28 @@ import React from "react";
 import { CurrentUserContext } from "./../contexts/CurrentUserContext.js";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+  // Подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
+
+  // Стейты имени и описания данных пользователя
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
+
+  // Монтирование эффекта установки данных пользователя
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser]);
+
+  // Управляемые компоненты input полей формы
   function handleNameChange(evt) {
     setName(evt.target.value);
   }
   function handleDescriptionChange(evt) {
     setDescription(evt.target.value);
   }
+
+  // Обработчик сабмита формы
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateUser({
@@ -23,6 +32,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       about: description,
     });
   }
+
   return (
     <PopupWithForm
       title="Редактировать профиль"

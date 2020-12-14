@@ -2,8 +2,10 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import React from "react";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+  // Использование рефа
   const avatarRef = React.useRef();
 
+  // Обработчик сабмита формы
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateAvatar({
