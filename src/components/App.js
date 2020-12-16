@@ -20,6 +20,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
     false
   );
+  const [isZoomPopupOpen, setIsZoomPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     name: "",
     link: "",
@@ -83,6 +84,7 @@ function App() {
 
   // Функция открытия popup окна зума карточки
   function handleCardClick(card) {
+    setIsZoomPopupOpen(true);
     setSelectedCard(card);
   }
 
@@ -91,6 +93,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsZoomPopupOpen(false);
     setSelectedCard({ name: "", link: "" });
   }
 
@@ -162,7 +165,11 @@ function App() {
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
         />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup
+          isOpen={isZoomPopupOpen}
+          card={selectedCard}
+          onClose={closeAllPopups}
+        />
         <Footer />
       </div>
     </CurrentUserContext.Provider>

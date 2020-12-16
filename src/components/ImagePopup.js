@@ -1,4 +1,7 @@
-function ImagePopup({ card, onClose }) {
+function ImagePopup({ isOpen, card, onClose }) {
+  if (!isOpen) { 
+    return null;
+  }
   return (
     <section className={`${card ? "popup popup_opened" : "popup"} popup_zoom`}>
       <div className="popup__container popup__container_zoom">
