@@ -1,5 +1,5 @@
 import React from "react";
-import api from "../utils/Api.js";
+import api from "../utils/api.js";
 import Header from "../components/Header.js";
 import Main from "../components/Main.js";
 import Footer from "../components/Footer.js";
@@ -20,7 +20,10 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
     false
   );
-  const [selectedCard, setSelectedCard] = React.useState("");
+  const [selectedCard, setSelectedCard] = React.useState({
+    name: "",
+    link: "",
+  });
 
   // Монтирование эффекта через Promise.all
   React.useEffect(() => {
@@ -41,11 +44,17 @@ function App() {
       api.putLike(card._id).then((newCard) => {
         const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
         setCards(newCards);
+      })
+      .catch((err) => {
+        alert(err);
       });
     } else {
       api.deleteLike(card._id).then((newCard) => {
         const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
         setCards(newCards);
+      })
+      .catch((err) => {
+        alert(err);
       });
     }
   }
@@ -55,6 +64,9 @@ function App() {
     api.deleteCard(card._id).then(() => {
       const newCardsArr = cards.filter((c) => c._id !== card._id);
       setCards(newCardsArr);
+    })
+    .catch((err) => {
+      alert(err);
     });
   }
 
@@ -79,7 +91,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard("");
+    setSelectedCard({ name: "", link: "" });
   }
 
   // Функция апдейта данных пользователя
