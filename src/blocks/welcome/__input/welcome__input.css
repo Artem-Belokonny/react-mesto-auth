@@ -1,0 +1,15 @@
+.welcome__input {
+    width: 100%; 
+    padding: 0;
+    padding-bottom: 13px;
+    margin: 0 0 30px; 
+    font-style: normal; 
+    font-weight: normal; 
+    font-size: 14px; 
+    line-height: 17px; 
+    border: none; 
+    border-bottom: 1px solid #CCCCCC; 
+    position: relative;
+    background-color: black;
+    color: white;
+}

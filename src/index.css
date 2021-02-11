@@ -41,3 +41,16 @@
 @import url(../src/blocks/elements/__likes-count/elements__likes-count.css);
 @import url(../src/blocks/profile/__avatar-container/profile__avatar-container.css);
 @import url(../src/blocks/profile/__edit-avatar/profile__edit-avatar.css);
+@import url(../src/blocks/header/__login/header__login.css);
+@import url(../src/blocks/header/__login-link/header__login-link.css);
+@import url(../src/blocks/header/__button/header__button.css);
+@import url(../src/blocks/header/__container/header__container.css);
+@import url(../src/blocks/welcome/welcome.css);
+@import url(../src/blocks/welcome/__button/welcome__button.css);
+@import url(../src/blocks/welcome/__container/welcome__container.css);
+@import url(../src/blocks/welcome/__title/welcome__title.css);
+@import url(../src/blocks/welcome/__input/welcome__input.css);
+@import url(../src/blocks/welcome/__subtitle/welcome__subtitle.css);
+@import url(../src/blocks/welcome/__subtitle-link/welcome__subtitle-link.css);
+@import url(../src/blocks/popup/__logo/popup__logo.css);
+@import url(../src/blocks/popup/__title/_register/popup__title_register.css);

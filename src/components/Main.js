@@ -2,6 +2,8 @@ import editButton from "./../images/edit-button.svg";
 import React from "react";
 import Card from "./Card.js";
 import { CurrentUserContext } from "./../contexts/CurrentUserContext.js";
+import Header from "../components/Header.js";
+import Footer from "../components/Footer.js";
 
 function Main({
   onEditAvatar,
@@ -11,11 +13,15 @@ function Main({
   cards,
   onCardLike,
   onCardDelete,
+  handleSignOut,
+  userData
 }) {
   // Подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
+    <>
+    <Header textBtn="Выйти" userData={userData} handleSignOut={handleSignOut}/>
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
@@ -56,7 +62,6 @@ function Main({
           onClick={onAddPlace}
         ></button>
       </section>
-
       <section className="elements">
         {cards.map((card) => (
           <Card
@@ -69,6 +74,8 @@ function Main({
         ))}
       </section>
     </main>
+    <Footer />
+    </>
   );
 }
 

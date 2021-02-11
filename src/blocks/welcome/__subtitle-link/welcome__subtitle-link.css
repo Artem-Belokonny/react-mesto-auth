@@ -1,0 +1,11 @@
+.welcome__subtitle-link {
+    text-decoration: none;
+    color: inherit;
+    opacity: 1;
+    transition: opacity 2s;
+}
+
+.welcome__subtitle-link:hover {
+    opacity: .6;
+    cursor: pointer;
+}

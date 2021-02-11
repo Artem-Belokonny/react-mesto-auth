@@ -1,0 +1,11 @@
+.header__login-link {
+  text-decoration: none;
+  color: inherit;
+  opacity: 1;
+  transition: opacity 2s;
+}
+
+.header__login-link:hover {
+  opacity: .6;
+  cursor: pointer;
+}
