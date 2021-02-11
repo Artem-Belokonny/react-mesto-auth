@@ -3,7 +3,6 @@ import React from "react";
 import Card from "./Card.js";
 import { CurrentUserContext } from "./../contexts/CurrentUserContext.js";
 import Header from "../components/Header.js";
-import Footer from "../components/Footer.js";
 
 function Main({
   onEditAvatar,
@@ -74,7 +73,6 @@ function Main({
         ))}
       </section>
     </main>
-    <Footer />
     </>
   );
 }

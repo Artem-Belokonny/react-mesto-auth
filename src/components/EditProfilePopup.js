@@ -12,8 +12,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
   // Монтирование эффекта установки данных пользователя
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
+    setName(currentUser.name || '');
+    setDescription(currentUser.about || '');
   }, [currentUser]);
 
   // Управляемые компоненты input полей формы

@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 function Header({
   subtitle,
-  link,
+  link='#',
   textBtn,
   handleSignOut,
   userData
 }) {
   return (
     <header className="header">
-      <a href="#" className="header__logo-link">
+      <a href={link} className="header__logo-link">
         <img src={logo} alt="Логотип" className="header__logo" />
       </a>
       <div className="header__container">

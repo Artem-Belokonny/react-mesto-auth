@@ -1,6 +1,7 @@
 import React from "react";
 import api from "../utils/api.js";
 import Main from "../components/Main.js";
+import Footer from "../components/Footer.js";
 import ImagePopup from "../components/ImagePopup.js";
 import EditProfilePopup from "../components/EditProfilePopup.js";
 import EditAvatarPopup from "../components/EditAvatarPopup.js";
@@ -44,7 +45,7 @@ function App() {
   });
   const [registerPopup, setRegisterPopup] = React.useState({
     message: "",
-    image: ""
+    image: "",
   });
 
   React.useEffect(() => {
@@ -54,52 +55,59 @@ function App() {
     }
   }, [loggedIn]);
 
-    // Монтирование эффекта через Promise.all
-    React.useEffect(() => {
-      Promise.all([api.getUserData(), api.getInitialCards()])
-        .then(([userData, cardData]) => {
-          setCurrentUser(userData);
-          setCards(cardData);
-        })
-        .catch((err) => {
-          alert(err);
-        });
-    }, []);
+  // Монтирование эффекта через Promise.all
+  React.useEffect(() => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([userData, cardData]) => {
+        setCurrentUser(userData);
+        setCards(cardData);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, []);
 
   // Функция регистрации
   function handleRegister(data) {
     const { email, password } = data;
-    return mestoAuth.register(email, password).then((res) => {
-      if (res) {
+    return mestoAuth
+      .register(email, password)
+      .then((res) => {
+        if (res) {
+          onRegisterPopup();
+          setRegisterPopup({
+            message: "Вы успешно зарегистрировались!",
+            image: success,
+          });
+        }
+        return res;
+      })
+      .catch(() => {
         onRegisterPopup();
         setRegisterPopup({
-          message: "Вы успешно зарегистрировались!",
-          image: success
-        })
-      }
-      return res;
-    })
-    .catch(() => {
-      onRegisterPopup();
-      setRegisterPopup({
-        message: "Что-то пошло не так! Попробуйте еще раз.",
-        image: fail
-      })
-    });
+          message: "Что-то пошло не так! Попробуйте еще раз.",
+          image: fail,
+        });
+      });
   }
 
   // Функция авторизации
   function handleLogin(data) {
     const { email, password } = data;
-    return mestoAuth.authorize(email, password).then((res) => {
-      if (res.token) {
-        setLoggedIn(true);
-        localStorage.setItem("jwt", res.token);
-        setUserData({
-          email: email,
-        });
-      }
-    });
+    return mestoAuth
+      .authorize(email, password)
+      .then((res) => {
+        if (res.token) {
+          setLoggedIn(true);
+          localStorage.setItem("jwt", res.token);
+          setUserData({
+            email: email,
+          });
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
 
   // Функция выхода
@@ -111,16 +119,21 @@ function App() {
 
   // Функция проверки токена
   function tokenCheck(jwt) {
-    mestoAuth.getContent(jwt).then((res) => {
-      if (res) {
-        const userData = {
-          email: res.data.email,
-        };
-        setLoggedIn(true);
-        setUserData(userData);
-        history.push("/");
-      }
-    });
+    mestoAuth
+      .getContent(jwt)
+      .then((res) => {
+        if (res) {
+          const userData = {
+            email: res.data.email,
+          };
+          setLoggedIn(true);
+          setUserData(userData);
+          history.push("/");
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
 
   // Функция лайк-дизлайк
@@ -198,11 +211,11 @@ function App() {
       .patchUserData(userData)
       .then((res) => {
         setCurrentUser(res);
+        closeAllPopups();
       })
       .catch((err) => {
         alert(err);
       });
-    closeAllPopups();
   }
 
   // Функция апдейта аватарки пользователя
@@ -211,11 +224,11 @@ function App() {
       .patchUserAvatar(userAvatar)
       .then((res) => {
         setCurrentUser(res);
+        closeAllPopups();
       })
       .catch((err) => {
         alert(err);
       });
-    closeAllPopups();
   }
 
   // Функция добавления новой карточки
@@ -224,17 +237,17 @@ function App() {
       .postNewCard(cardData)
       .then((newCard) => {
         setCards([newCard, ...cards]);
+        closeAllPopups();
       })
       .catch((err) => {
         alert(err);
       });
-    closeAllPopups();
   }
 
   return (
-    <Switch>
-      <CurrentUserContext.Provider value={currentUser}>
-        <div className="page">
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <Switch>
           <ProtectedRoute
             exact
             path="/"
@@ -259,35 +272,36 @@ function App() {
           <Route>
             {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
           </Route>
-          <EditProfilePopup
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser}
-          />
-          <AddPlacePopup
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit}
-          />
-          <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-          />
-          <ImagePopup
-            isOpen={isZoomPopupOpen}
-            card={selectedCard}
-            onClose={closeAllPopups}
-          />
-          <InfoTooltip
-            isOpen={isRegisterPopupOpen}
-            onClose={closeAllPopups}
-            InfoTool={registerPopup}
-            name="register"
-          />
-        </div>
-      </CurrentUserContext.Provider>
-    </Switch>
+        </Switch>
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+        />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+        <ImagePopup
+          isOpen={isZoomPopupOpen}
+          card={selectedCard}
+          onClose={closeAllPopups}
+        />
+        <InfoTooltip
+          isOpen={isRegisterPopupOpen}
+          onClose={closeAllPopups}
+          InfoTool={registerPopup}
+          name="register"
+        />
+        <Footer />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

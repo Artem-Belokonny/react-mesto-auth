@@ -2,7 +2,6 @@ import React from "react";
 import Welcome from "../components/Welcome.js";
 import { useHistory, withRouter, Link } from 'react-router-dom';
 import Header from "../components/Header.js";
-import Footer from "../components/Footer.js";
 
 function Register({onRegister}) {
   const [data, setData] = React.useState({
@@ -67,7 +66,6 @@ function Register({onRegister}) {
           </span>
         }
       />
-      <Footer />
     </>
   );
 }

@@ -2,9 +2,6 @@ import React from "react";
 import Welcome from "../components/Welcome.js";
 import {useHistory, withRouter} from 'react-router-dom';
 import Header from "../components/Header.js";
-import Footer from "../components/Footer.js";
-
-
 
 function Login({handleLogin}) {
   const history = useHistory();
@@ -17,6 +14,9 @@ function Login({handleLogin}) {
     evt.preventDefault();
     handleLogin(data)
     .then(() => history.push('/'))
+    .catch((err) => {
+      alert(err);
+    });
   }
 
   function handleChange(evt) {
@@ -58,7 +58,6 @@ function Login({handleLogin}) {
           </>
         }
       />
-      <Footer />
     </>
   );
 }
