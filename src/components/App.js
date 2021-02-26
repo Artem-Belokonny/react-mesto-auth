@@ -49,23 +49,30 @@ function App() {
   });
 
   React.useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      tokenCheck(jwt);
+    const token = localStorage.getItem('jwt');
+    if (!token){
+      return;
     }
-  }, [loggedIn]);
+    api.setToken(token);
+    setLoggedIn(true);
+    tokenCheck(token);
+    }, []);
 
   // Монтирование эффекта через Promise.all
   React.useEffect(() => {
-    Promise.all([api.getUserData(), api.getInitialCards()])
-      .then(([userData, cardData]) => {
-        setCurrentUser(userData);
-        setCards(cardData);
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }, []);
+    if (loggedIn) {
+      api.setToken(localStorage.getItem('jwt'));
+      history.push('/');
+      Promise.all([api.getUserData(), api.getInitialCards()])
+        .then(([userData, cardData]) => {
+          setCurrentUser(userData);
+          setCards(cardData);
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }, [loggedIn, history]);
 
   // Функция регистрации
   function handleRegister(data) {
@@ -92,7 +99,7 @@ function App() {
   }
 
   // Функция авторизации
-  function handleLogin(data) {
+  function handleLogin (data) {
     const { email, password } = data;
     return mestoAuth
       .authorize(email, password)
@@ -103,6 +110,7 @@ function App() {
           setUserData({
             email: email,
           });
+          api.setToken(res.token);
         }
       })
       .catch((err) => {
@@ -114,7 +122,7 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
-    history.push("/sign-in");
+    history.push("/signin");
   }
 
   // Функция проверки токена
@@ -124,7 +132,7 @@ function App() {
       .then((res) => {
         if (res) {
           const userData = {
-            email: res.data.email,
+            email: res.email,
           };
           setLoggedIn(true);
           setUserData(userData);
@@ -138,12 +146,12 @@ function App() {
 
   // Функция лайк-дизлайк
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some(user => user === currentUser._id);
     if (!isLiked) {
       api
         .putLike(card._id)
         .then((newCard) => {
-          const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+          const newCards = cards.map((c) => (c._id === card._id ? newCard.data : c));
           setCards(newCards);
         })
         .catch((err) => {
@@ -153,7 +161,7 @@ function App() {
       api
         .deleteLike(card._id)
         .then((newCard) => {
-          const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+          const newCards = cards.map((c) => (c._id === card._id ? newCard.data : c));
           setCards(newCards);
         })
         .catch((err) => {
@@ -263,14 +271,14 @@ function App() {
             component={Main}
             userData={userData.email}
           />
-          <Route path="/sign-up">
+          <Route path="/signup">
             <Register onRegister={handleRegister} />
           </Route>
-          <Route path="/sign-in">
+          <Route path="/signin">
             <Login handleLogin={handleLogin} tokenCheck={tokenCheck} />
           </Route>
           <Route>
-            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
           </Route>
         </Switch>
         <EditProfilePopup

@@ -8,11 +8,11 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   // Тернарные выражения на отображение стилей лайка/корзины
-  const isOwn = card.owner._id === currentUser._id;
+  const isOwn = card.owner === currentUser._id;
   const cardDeleteButtonClassName = `elements__delete-button ${
     isOwn ? "elements__delete-button" : "elements__delete-button_hidden"
   }`;
-  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  const isLiked = card.likes.some(user => user === currentUser._id);
   const cardLikeButtonClassName = `elements__like ${
     isLiked ? "elements__like_active" : "elements__like"
   }`;

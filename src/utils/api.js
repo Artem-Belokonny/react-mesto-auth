@@ -6,6 +6,10 @@ class Api {
     this.headers = headers;
   }
 
+  setToken(token){
+    this.headers.authorization = `Bearer ${token}` ;
+  }
+
   getUserData() {
     return fetch(`${this.baseUrl}/users/me`, {
       headers: this.headers,
@@ -80,7 +84,7 @@ class Api {
   }
 
   putLike(_id) {
-    return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
+    return fetch(`${this.baseUrl}/cards/${_id}/likes`, {
       method: "PUT",
       headers: this.headers,
     })
@@ -91,7 +95,7 @@ class Api {
   }
 
   deleteLike(_id) {
-    return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
+    return fetch(`${this.baseUrl}/cards/${_id}/likes`, {
       method: "DELETE",
       headers: this.headers,
     })
@@ -100,14 +104,16 @@ class Api {
         return data;
       });
   }
+
 }
 
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-17",
+  baseUrl: "http://api.volorel-mesto.students.nomoreparties.space",
   headers: {
-    authorization: "f8a9e527-6ca4-4e1d-b3eb-bf388e887896",
+    "authorization": `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
   },
 });
+
 
 export default api;

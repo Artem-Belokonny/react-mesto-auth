@@ -29,7 +29,7 @@ function Login({handleLogin}) {
 
   return (
     <>
-      <Header subtitle="Регистрация" link="/sign-up"/>
+      <Header subtitle="Регистрация" link="/signup"/>
       <Welcome
         onSubmit={handleSubmit}
         name="login"

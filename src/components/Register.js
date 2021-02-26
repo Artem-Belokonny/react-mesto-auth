@@ -21,7 +21,7 @@ function Register({onRegister}) {
   function handleSubmit(evt) {
     evt.preventDefault();
       onRegister(data)
-      .then(() => history.push('/sign-in'))
+      .then(() => history.push('/signin'))
       .catch((err) => {
         alert(err);
       });
@@ -29,7 +29,7 @@ function Register({onRegister}) {
 
   return (
     <>
-      <Header subtitle="Войти" link="/sign-in"/>
+      <Header subtitle="Войти" link="/signin"/>
       <Welcome
         onSubmit={handleSubmit}
         name="register"
@@ -62,7 +62,7 @@ function Register({onRegister}) {
         childrenSubtitle={
           <span className="welcome__subtitle">
             Уже зарегистрированы?{" "}
-            <Link to="/sign-in" className="welcome__subtitle-link">Войти</Link>
+            <Link to="/signin" className="welcome__subtitle-link">Войти</Link>
           </span>
         }
       />
